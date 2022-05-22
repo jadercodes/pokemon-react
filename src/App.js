@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./App.css";
+import PokemonCard from "./PokemonCard";
 
 export default function App() {
   let [pokemon, setPokemon] = useState(null);
   let [type, setType] = useState(null);
+  let [icon, setIcon] = useState(null);
   let [loaded, setLoaded] = useState(false);
 
   let form = (
@@ -19,6 +21,11 @@ export default function App() {
   function showPokemon(response) {
     setLoaded(true);
     setType(response.data.types[0].type.name);
+    let pokemonId = response.data.id;
+    setIcon(
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`
+    );
+    console.log(response);
   }
 
   function handleSubmit(event) {
@@ -37,8 +44,7 @@ export default function App() {
     return (
       <div>
         {form}
-        <div>Name: {pokemon}</div>
-        <div>Type: {type}</div>
+        <PokemonCard pokemon={pokemon} type={type} icon={icon} />
       </div>
     );
   } else {
