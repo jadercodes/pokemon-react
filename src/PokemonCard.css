@@ -1,0 +1,16 @@
+.pokemon-card {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+#pokemon-name {
+  text-transform: capitalize;
+}
+
+#hit-points {
+  color: #872c1c;
+}
+
+#pokemon-name,
+#hit-points {
+  font-weight: bold;
+}

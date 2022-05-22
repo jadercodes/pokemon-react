@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import PokemonCard from "./PokemonCard";
 
 export default function App() {
   let [pokemon, setPokemon] = useState(null);
   let [type, setType] = useState(null);
+  let [hitPoints, setHitPoints] = useState(null);
   let [icon, setIcon] = useState(null);
   let [loaded, setLoaded] = useState(false);
 
@@ -21,6 +23,7 @@ export default function App() {
   function showPokemon(response) {
     setLoaded(true);
     setType(response.data.types[0].type.name);
+    setHitPoints(response.data.stats[0].base_stat);
     let pokemonId = response.data.id;
     setIcon(
       `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`
@@ -30,7 +33,7 @@ export default function App() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const submitPokemon = event.target.elements.pokemon.value;
+    const submitPokemon = event.target.elements.pokemon.value.toLowerCase();
     setPokemon(submitPokemon);
     let url = `https://pokeapi.co/api/v2/pokemon/${submitPokemon}`;
     axios.get(url).then(showPokemon).catch(handleError);
@@ -44,7 +47,12 @@ export default function App() {
     return (
       <div>
         {form}
-        <PokemonCard pokemon={pokemon} type={type} icon={icon} />
+        <PokemonCard
+          pokemon={pokemon}
+          type={type}
+          icon={icon}
+          hitPoints={hitPoints}
+        />
       </div>
     );
   } else {
